@@ -21,6 +21,7 @@ public class UserService {
         if(user.getCity() == null || user.getCity().trim().isEmpty()){
             throw new IllegalArgumentException("City is required");
         }
+
         User savedUser = userRepository.save(user);
         return savedUser;
     }
@@ -33,29 +34,42 @@ public class UserService {
     }
 
     public User getUserById(Long id) {
-        Optional<User> user = userRepository.findById(id);
 
-        if (user.isPresent()) {
-            return user.get();
-        } else {
-            throw new IllegalArgumentException("No user records found at ID: " + id);
+        if (id == null || id <= 0){
+            throw new IllegalArgumentException("User ID must be positive");
         }
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()){
+            throw new IllegalArgumentException("No User was found at ID: " + id);
+        }
+        return user.get();
+
     }
 
     public User updateUser(Long id, User user) {
-        User existingUser = getUserById(id);
-        if (user.getAge() < 18){
-            throw new IllegalArgumentException("Age must be 18+ years old");
+        if (id == null || id <= 0){
+            throw new IllegalArgumentException("User ID must be positive");
         }
+        Optional<User> existingUser = userRepository.findById(id);
+        if(existingUser.isEmpty()){
+            throw new IllegalArgumentException("No User found at ID: "+ id);
+        }
+        User userFound = existingUser.get();
         if (user.getName() == null || user.getName().trim().isEmpty()){
             throw new IllegalArgumentException("Name is required");
         }
+        userFound.setName(user.getName());
+        if (user.getAge() < 18){
+            throw new IllegalArgumentException("You're under age");
+        }
+        userFound.setAge(user.getAge());
+        if(user.getCity() == null || user.getCity().trim().isEmpty()){
+            throw new IllegalArgumentException("City is required");
+        }
+        userFound.setCity(user.getCity());
+        User updatedUser = userRepository.save(userFound);
+        return updatedUser;
 
-        existingUser.setName(user.getName());
-        existingUser.setAge(user.getAge());
-        existingUser.setCity(user.getCity());
-
-        return userRepository.save(existingUser);
     }
 
     public long count() {
@@ -63,10 +77,18 @@ public class UserService {
     }
 
     public String deleteUserById(Long id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-            return "User " + " at ID: " + id + " was successfully deleted";
+        if (id == null || id <= 0){
+            throw new IllegalArgumentException("User ID must be positive");
         }
-        throw new IllegalArgumentException("User "+ userRepository.existsById(id)+"at ID: " + id + " Not deleted");
+        Optional<User> findId = userRepository.findById(id);
+        if (findId.isEmpty()){
+            throw new IllegalArgumentException("No User found at ID: "+id);
+        }
+        User userFound = findId.get();
+        userRepository.deleteById(id);
+        return "User "+ userFound.getName() + " at ID: "+ id +" deleted ";
+
+
+
     }
 }

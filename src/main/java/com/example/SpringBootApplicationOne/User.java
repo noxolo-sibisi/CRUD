@@ -29,6 +29,10 @@ public class User {
     public User(String name) {
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
@@ -55,10 +59,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{ " +
-                "name='" + name + '\'' +
-                "| age=" + age +
-                "| city='" + city + '\'' +
+        return "User at ID :{ " +
+                " user ID: "+ id + "| "+
+                "name= '" + name + '\'' +
+                "| age= " + age +
+                "| city= '" + city + '\'' +
                 '}';
     }
 }

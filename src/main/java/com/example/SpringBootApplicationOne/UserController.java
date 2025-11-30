@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-
 @RestController
 @RequestMapping("/api")
 
@@ -17,7 +16,7 @@ private UserService userService;
     @PostMapping("/create")
     public String createUser(@RequestBody User userData){
         userService.createUser(userData);
-        return  "User created " + userData.getName() + "User Data "+ userData.toString() + "\n Available User(s): " + userService.count();
+        return  "User created:  " +  userData.toString() + "\n Available User(s): " + userService.count();
     }
 
     @GetMapping("/view")
