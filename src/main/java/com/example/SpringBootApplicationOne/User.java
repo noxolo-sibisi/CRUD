@@ -1,6 +1,8 @@
 package com.example.SpringBootApplicationOne;
 
 import  jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
+
 @Entity
 @Table(name = "users")
 
@@ -24,9 +26,6 @@ public class User {
         this.name = name;
         this.age = age;
         this.city = city;
-    }
-
-    public User(String name) {
     }
 
     public Long getId() {
@@ -59,11 +58,10 @@ public class User {
 
     @Override
     public String toString() {
-        return "User at ID :{ " +
-                " user ID: "+ id + "| "+
-                "name= '" + name + '\'' +
+        return "User "+name+" created { "
+                + "name= '" + name + '\'' +
                 "| age= " + age +
-                "| city= '" + city + '\'' +
+                "| city= '" +city + '\'' +
                 '}';
     }
 }

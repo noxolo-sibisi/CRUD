@@ -16,7 +16,7 @@ private UserService userService;
     @PostMapping("/create")
     public String createUser(@RequestBody User userData){
         userService.createUser(userData);
-        return  "User created:  " +  userData.toString() + "\n Available User(s): " + userService.count();
+        return    userData.toString()  +  "\n Available User(s): " + userService.count();
     }
 
     @GetMapping("/view")

@@ -8,21 +8,16 @@ import java.util.Optional;
 @Service
 public class UserService {
     @Autowired
+    private UserDataCleaner userDataCleaner;
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserValidator userValidator;
 
     public User createUser(User user) {
-
-        if (user.getName() == null || user.getName().trim().isEmpty()){
-            throw new IllegalArgumentException("Name is required");
-        }
-        if (user.getAge() < 18){
-            throw new IllegalArgumentException("You're under age");
-        }
-        if(user.getCity() == null || user.getCity().trim().isEmpty()){
-            throw new IllegalArgumentException("City is required");
-        }
-
-        User savedUser = userRepository.save(user);
+        User cleanedUser = userDataCleaner.cleanUser(user);
+        userValidator.RequiredUserFields(user);
+        User savedUser = userRepository.save(cleanedUser);
         return savedUser;
     }
 
@@ -34,7 +29,6 @@ public class UserService {
     }
 
     public User getUserById(Long id) {
-
         if (id == null || id <= 0){
             throw new IllegalArgumentException("User ID must be positive");
         }
@@ -43,7 +37,6 @@ public class UserService {
             throw new IllegalArgumentException("No User was found at ID: " + id);
         }
         return user.get();
-
     }
 
     public User updateUser(Long id, User user) {
@@ -55,21 +48,15 @@ public class UserService {
             throw new IllegalArgumentException("No User found at ID: "+ id);
         }
         User userFound = existingUser.get();
-        if (user.getName() == null || user.getName().trim().isEmpty()){
-            throw new IllegalArgumentException("Name is required");
-        }
-        userFound.setName(user.getName());
-        if (user.getAge() < 18){
-            throw new IllegalArgumentException("You're under age");
-        }
-        userFound.setAge(user.getAge());
-        if(user.getCity() == null || user.getCity().trim().isEmpty()){
-            throw new IllegalArgumentException("City is required");
-        }
-        userFound.setCity(user.getCity());
+
+        User cleanedUser = userDataCleaner.cleanUser(user);
+        userValidator.RequiredUserFields(user);
+
+        userFound.setName(cleanedUser.getName());
+        userFound.setAge(cleanedUser.getAge());
+        userFound.setCity(cleanedUser.getCity());
         User updatedUser = userRepository.save(userFound);
         return updatedUser;
-
     }
 
     public long count() {
@@ -87,8 +74,5 @@ public class UserService {
         User userFound = findId.get();
         userRepository.deleteById(id);
         return "User "+ userFound.getName() + " at ID: "+ id +" deleted ";
-
-
-
     }
 }
