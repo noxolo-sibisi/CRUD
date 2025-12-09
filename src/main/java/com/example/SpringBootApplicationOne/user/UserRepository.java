@@ -1,4 +1,4 @@
-package com.example.SpringBootApplicationOne;
+package com.example.SpringBootApplicationOne.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

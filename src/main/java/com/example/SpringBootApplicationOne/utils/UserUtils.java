@@ -1,16 +1,10 @@
-package com.example.SpringBootApplicationOne;
+package com.example.SpringBootApplicationOne.utils;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.example.SpringBootApplicationOne.user.User;
 
-@Service
-public class UserValidator {
-    @Autowired
-    private UserDataCleaner userDataCleaner;
-
-    public void RequiredUserFields(User user){
-        User cleanedUser = userDataCleaner.cleanUser(user);
-        if (cleanedUser.getName() == null || cleanedUser.getName().trim().isEmpty()){
+public class UserUtils {
+    public static void RequiredUserFields(User user) {
+        if (user.getName() == null || user.getName().trim().isEmpty()){
             throw new IllegalArgumentException("Name is required");
         }
         if (user.getAge() < 0){
@@ -22,13 +16,12 @@ public class UserValidator {
         if (user.getAge() > 100){
             throw new IllegalArgumentException("Age should be realistic");
         }
-        if (cleanedUser.getCity() == null || cleanedUser.getCity().trim().isEmpty()){
+        if (user.getCity() == null || user.getCity().trim().isEmpty()){
             throw new IllegalArgumentException("City is required");
         }
-
     }
 
-    private  void ValidateAge(User user,Integer age){
+    public static  void ValidateAge(User user,Integer age){
         if (user.getAge() < 0){
             throw new IllegalArgumentException("Age should not be negative");
         }
@@ -39,6 +32,4 @@ public class UserValidator {
             throw new IllegalArgumentException("Age should be realistic");
         }
     }
-
-
 }

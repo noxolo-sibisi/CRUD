@@ -1,17 +1,16 @@
-package com.example.SpringBootApplicationOne;
+package com.example.SpringBootApplicationOne.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
-
+@RequestMapping("/api/users")
 public class UserController{
-@Autowired
-private UserService userService;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/create")
     public String createUser(@RequestBody User userData){
@@ -33,6 +32,7 @@ private UserService userService;
     public User updateUser(@PathVariable Long id, @RequestBody User newUser){
       return userService.updateUser(id, newUser);
     }
+
     @DeleteMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id) {
       return userService.deleteUserById(id);

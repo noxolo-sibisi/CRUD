@@ -1,5 +1,6 @@
-package com.example.SpringBootApplicationOne;
+package com.example.SpringBootApplicationOne.user;
 
+import com.example.SpringBootApplicationOne.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -7,18 +8,13 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    @Autowired
-    private UserDataCleaner userDataCleaner;
+
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private UserValidator userValidator;
 
     public User createUser(User user) {
-        User cleanedUser = userDataCleaner.cleanUser(user);
-        userValidator.RequiredUserFields(user);
-        User savedUser = userRepository.save(cleanedUser);
-        return savedUser;
+        UserUtils.RequiredUserFields(user);
+        return userRepository.save(user);
     }
 
     public List<User> getAllUsers() {
@@ -40,6 +36,9 @@ public class UserService {
     }
 
     public User updateUser(Long id, User user) {
+
+        UserUtils.RequiredUserFields(user);
+
         if (id == null || id <= 0){
             throw new IllegalArgumentException("User ID must be positive");
         }
@@ -49,14 +48,10 @@ public class UserService {
         }
         User userFound = existingUser.get();
 
-        User cleanedUser = userDataCleaner.cleanUser(user);
-        userValidator.RequiredUserFields(user);
-
-        userFound.setName(cleanedUser.getName());
-        userFound.setAge(cleanedUser.getAge());
-        userFound.setCity(cleanedUser.getCity());
-        User updatedUser = userRepository.save(userFound);
-        return updatedUser;
+        userFound.setName(userFound.getName());
+        userFound.setAge(userFound.getAge());
+        userFound.setCity(userFound.getCity());
+        return userRepository.save(userFound);
     }
 
     public long count() {

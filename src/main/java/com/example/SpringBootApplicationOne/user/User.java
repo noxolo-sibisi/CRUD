@@ -1,7 +1,6 @@
-package com.example.SpringBootApplicationOne;
+package com.example.SpringBootApplicationOne.user;
 
 import  jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @Table(name = "users")
