@@ -13,7 +13,6 @@ public class UserService {
     private UserRepository userRepository;
 
     public User createUser(User user) {
-        UserUtils.RequiredUserFields(user);
         return userRepository.save(user);
     }
 
@@ -37,7 +36,7 @@ public class UserService {
 
     public User updateUser(Long id, User user) {
 
-        UserUtils.RequiredUserFields(user);
+//        UserUtils.RequiredUserFields(user);
 
         if (id == null || id <= 0){
             throw new IllegalArgumentException("User ID must be positive");
@@ -48,9 +47,9 @@ public class UserService {
         }
         User userFound = existingUser.get();
 
-        userFound.setName(userFound.getName());
-        userFound.setAge(userFound.getAge());
-        userFound.setCity(userFound.getCity());
+        userFound.setName(user.getName());
+        userFound.setAge(user.getAge());
+        userFound.setCity(user.getCity());
         return userRepository.save(userFound);
     }
 

@@ -1,6 +1,7 @@
 package com.example.SpringBootApplicationOne.user;
 
 import  jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "users")
@@ -10,13 +11,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @NotBlank(message = "Name is required")
+    @Size(min = 2, max = 50, message = "Name must be 2-50 characters")
+    @Column(name = "name",nullable = false)
     private String name;
 
+    @NotNull(message = "Age is required")
+
+    @Min(value = 17, message = "You're under age")
+    @Max(value = 120, message = "Age should be realistic")
     @Column(name = "age")
     private int age;
 
-    @Column(name = "city")
+    @NotBlank(message = "City is required")
+    @Size(min = 2, max = 50, message = "City mist be 2-50 characters")
+    @Column(name = "city", nullable = false)
     private String city;
 
     public User() {}

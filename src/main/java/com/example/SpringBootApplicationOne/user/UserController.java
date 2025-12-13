@@ -1,5 +1,6 @@
 package com.example.SpringBootApplicationOne.user;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,7 @@ public class UserController{
     private UserService userService;
 
     @PostMapping("/create")
-    public String createUser(@RequestBody User userData){
+    public String createUser(@Valid @RequestBody User userData){
         userService.createUser(userData);
         return    userData.toString()  +  "\n Available User(s): " + userService.count();
     }
@@ -29,7 +30,7 @@ public class UserController{
     }
 
     @PutMapping("/update/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User newUser){
+    public User updateUser(@PathVariable Long id,@Valid @RequestBody User newUser){
       return userService.updateUser(id, newUser);
     }
 
