@@ -17,7 +17,6 @@ public class User {
     private String name;
 
     @NotNull(message = "Age is required")
-
     @Min(value = 17, message = "You're under age")
     @Max(value = 120, message = "Age should be realistic")
     @Column(name = "age")
@@ -36,6 +35,21 @@ public class User {
         this.city = city;
     }
 
+    private String cleanedData(String name){
+        String rawName = name.trim();
+        String[] names = rawName.split(" ");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String s : names) {
+            if (!s.isEmpty()){
+                String letters = s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();
+                stringBuilder.append(letters);
+                stringBuilder.append(" ");
+            }
+        }
+        String cleanedName = stringBuilder.toString().trim();
+        return cleanedName;
+    }
+
     public Long getId() {
         return id;
     }
@@ -45,7 +59,7 @@ public class User {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = cleanedData(name);
     }
 
     public int getAge() {
@@ -61,7 +75,7 @@ public class User {
     }
 
     public void setCity(String city) {
-        this.city = city;
+        this.city = cleanedData(city);
     }
 
     @Override
@@ -72,4 +86,5 @@ public class User {
                 "| city= '" +city + '\'' +
                 '}';
     }
+
 }

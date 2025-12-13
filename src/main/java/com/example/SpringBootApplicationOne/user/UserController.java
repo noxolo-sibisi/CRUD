@@ -16,7 +16,7 @@ public class UserController{
     @PostMapping("/create")
     public String createUser(@Valid @RequestBody User userData){
         userService.createUser(userData);
-        return    userData.toString()  +  "\n Available User(s): " + userService.count();
+        return    userData.toString() +  "\n Available User(s): " + userService.count();
     }
 
     @GetMapping("/view")
