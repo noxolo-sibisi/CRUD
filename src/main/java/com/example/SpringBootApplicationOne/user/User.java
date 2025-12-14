@@ -35,21 +35,6 @@ public class User {
         this.city = city;
     }
 
-    private String cleanedData(String name){
-        String rawName = name.trim();
-        String[] names = rawName.split(" ");
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String s : names) {
-            if (!s.isEmpty()){
-                String letters = s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase();
-                stringBuilder.append(letters);
-                stringBuilder.append(" ");
-            }
-        }
-        String cleanedName = stringBuilder.toString().trim();
-        return cleanedName;
-    }
-
     public Long getId() {
         return id;
     }
@@ -59,7 +44,7 @@ public class User {
     }
 
     public void setName(String name) {
-        this.name = cleanedData(name);
+        this.name = name;
     }
 
     public int getAge() {
@@ -75,7 +60,7 @@ public class User {
     }
 
     public void setCity(String city) {
-        this.city = cleanedData(city);
+        this.city = city;
     }
 
     @Override

@@ -11,9 +11,12 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserUtils userUtils;
 
     public User createUser(User user) {
-        return userRepository.save(user);
+        User cleanedUser = userUtils.cleanUser(user);
+        return userRepository.save(cleanedUser);
     }
 
     public List<User> getAllUsers() {
@@ -35,9 +38,7 @@ public class UserService {
     }
 
     public User updateUser(Long id, User user) {
-
-//        UserUtils.RequiredUserFields(user);
-
+        User cleanedUser = userUtils.cleanUser(user);
         if (id == null || id <= 0){
             throw new IllegalArgumentException("User ID must be positive");
         }
@@ -50,7 +51,7 @@ public class UserService {
         userFound.setName(user.getName());
         userFound.setAge(user.getAge());
         userFound.setCity(user.getCity());
-        return userRepository.save(userFound);
+        return userRepository.save(cleanedUser);
     }
 
     public long count() {
