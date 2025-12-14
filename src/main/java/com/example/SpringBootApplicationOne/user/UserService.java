@@ -48,10 +48,10 @@ public class UserService {
         }
         User userFound = existingUser.get();
 
-        userFound.setName(user.getName());
-        userFound.setAge(user.getAge());
-        userFound.setCity(user.getCity());
-        return userRepository.save(cleanedUser);
+        userFound.setName(cleanedUser.getName());
+        userFound.setAge(cleanedUser.getAge());
+        userFound.setCity(cleanedUser.getCity());
+        return userRepository.save(userFound);
     }
 
     public long count() {
