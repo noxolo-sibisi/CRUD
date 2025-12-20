@@ -20,7 +20,6 @@ import java.util.List;
 @RequestMapping("/api/users")
 @Tag(name = "User Management", description = "Everything about User API Application")
 public class UserController{
-
     @Autowired
     private UserService userService;
 
