@@ -5,8 +5,11 @@ A production-ready RESTful API built with Spring Boot, featuring secure MySQL in
 🚀 Features
 
 · Full CRUD Operations: Complete Create, Read, Update, and Delete functionality for core data entities via RESTful endpoints.
+
 · Production Database Integration: Configured with a persistent MySQL database using optimized connection pooling (HikariCP).
+
 · Automated ORM: Utilizes Spring Data JPA & Hibernate for seamless object-relational mapping and automatic schema management.
+
 · Professional API Documentation: Interactive API console auto-generated with Springdoc OpenAPI (Swagger UI).
 · Structured Application Architecture: Implements the standard Spring Boot MVC pattern with clear separation of concerns.
 
